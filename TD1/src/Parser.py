@@ -107,6 +107,11 @@ def parseByLine(filename):
 print("Number of arguments:", len(sys.argv))
 print("Argument List:", str(sys.argv))
 
+# Verify the number of arguments
+if len(sys.argv) < 2:
+    print("Error : 1 argument needed")
+    exit(1)
+
 # Calling function
 parseByLine(sys.argv[1])
 
