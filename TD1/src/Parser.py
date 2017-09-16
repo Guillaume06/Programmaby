@@ -13,6 +13,21 @@ arrivalFarthest = ""
 farthestDistance = 0.0
 
 
+# Will print the results
+def printResults():
+    # With global, it tells that the variable aren't local
+    global departureClosest
+    global arrivalClosest
+    global closestDistance
+
+    global departureFarthest
+    global arrivalFarthest
+    global farthestDistance
+
+    print("Closest distance : ", departureClosest, " to ", arrivalClosest, " (", closestDistance, "km )")
+    print("Farthest distance : ", departureFarthest, " to ", arrivalFarthest, " (", farthestDistance, "km )")
+
+
 # Calling this function on a line will call all the updating functions
 def updateSearch(line):
     updateClosest(line)
@@ -79,28 +94,28 @@ def updateFarthest(line):
 
 # Parse the file line by line and call the corresponding function on each line
 def parseByLine(filename):
-
     # Test the existence of the file
-    if os.path.exists(filename):
-
-        # Open file
-        with open(filename, 'r') as f:
-
-            # Try to read line by line
-            try:
-
-                # Read line by line
-                for line in f:
-
-                    # Remove '\n'
-                    line = line.strip()
-                    updateSearch(line)
-
-            # Handle exception during reading
-            except:
-                print("Error occurred during file reading")
-    else:
+    if not os.path.exists(filename):
         print("Error : file ", filename, "not found")
+        exit(1)
+
+    # Open file
+    with open(filename, 'r') as f:
+
+        # Try to read line by line
+        try:
+
+            # Read line by line
+            for line in f:
+                # Remove '\n'
+                line = line.strip()
+                updateSearch(line)
+
+        # Handle exception during reading
+        except:
+            print("Error occurred during file reading")
+            exit(1)
+    printResults()
 
 
 # Main
@@ -114,7 +129,3 @@ if len(sys.argv) < 2:
 
 # Calling function
 parseByLine(sys.argv[1])
-
-# Print results
-print("Closest distance : ", departureClosest, " to ", arrivalClosest, " (", closestDistance, "km)")
-print("Farthest distance : ", departureFarthest, " to ", arrivalFarthest, " (", farthestDistance, "km)")
